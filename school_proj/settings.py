@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'students',
     'staff',
     'library',
+    'academics',
+    'school',
+    'school_proj',
 ]
 
 MIDDLEWARE = [

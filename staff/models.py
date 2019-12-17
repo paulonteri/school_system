@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class StaffRole(models.Model):
@@ -22,19 +23,38 @@ class Staff(models.Model):
     email = models.EmailField()
     home_town = models.CharField(max_length=20, null=True, blank=True)
     home_county = models.CharField(max_length=20, null=True, blank=True)
+    emergency_contact_name = models.CharField(null=True, max_length=40)
+    emergency_contact_relationship = models.CharField(null=True, max_length=10, help_text="Eg: Close Uncle")
+    emergency_phone = models.IntegerField(null=True, help_text="Enter Emergency phone number")
     health_condition = models.TextField(max_length=500, null=True, blank=True, default="Good", help_text="Enter "
                                                                                                          "health "
                                                                                                          "status or "
                                                                                                          "complications")
     is_employed = models.BooleanField(default=True)
-    is_teacher_staff = models.BooleanField(default=True)
+    is_teaching_staff = models.BooleanField(default=True)
 
     def __str__(self):
-        return f'{self.sir_name};{self.first_name},({self.role.role})'
+        return f'{self.role.role}: {self.sir_name} {self.first_name}'
+
+    def get_absolute_url(self):
+        reverse('student_detail', args=[str(self.student_id)])
+
+    class Meta:
+        verbose_name_plural = "staff"
+        ordering = ['sir_name', 'first_name']
 
 
 class TeachingStaff(models.Model):
     # subjects
-    staff_info = models.OneToOneField(Staff, on_delete=models.CASCADE
-                                      )
+    staff_info = models.OneToOneField(Staff, on_delete=models.PROTECT)
     tsc_number = models.IntegerField(unique=True)
+
+    def get_absolute_url(self):
+        reverse('student_detail', args=[str(self.student_id)])
+    
+    def __str__(self):
+        return f'{self.role.role}: {self.sir_name} {self.first_name}'
+
+    class Meta:
+        verbose_name_plural = "Teaching Staff"
+        ordering = ["tsc_number"]

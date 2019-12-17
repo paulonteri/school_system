@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+
+{% block content %}
+
+  <h1>School Home</h1>
+  <p>Welcome to School, a website developed by <em>Paul Onteri</em>!</p>
+  <h2>Dynamic content</h2>
+  <p>The school has the following record counts:</p>
+  
+    <ul>
+        <li><strong>Total Students:</strong> {{ num_students }}</li>
+        <li><strong>Total Staff:</strong> {{ num_staff }}</li>
+        <li><strong>Orphans:</strong> {{ orphan }}</li>
+    </ul>
+
+{% endblock %}

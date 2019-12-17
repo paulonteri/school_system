@@ -1,0 +1,9 @@
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+body {
+    background-color:rgb(226, 226, 226);
+    margin-top: 15px;
+  }
