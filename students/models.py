@@ -33,9 +33,14 @@ class Sponsor(models.Model):
         return f'{self.company_name} {self.sir_name} {self.first_name}'
 
 
+class Dormitories(models.Model):
+    DormitoryName = models.CharField(max_length=20)
+
+
 class Student(models.Model):
     student_id = models.IntegerField(primary_key=True, help_text="Enter Student ID")
     Class = models.ForeignKey(Classes, null=True, on_delete=models.PROTECT)
+    dormitory = models.ForeignKey(Dormitories, null=True, on_delete=models.PROTECT, blank=True)
     first_name = models.CharField(max_length=20, help_text="Enter First Name")
     sir_name = models.CharField(max_length=20, help_text="Enter Sir Name")
     other_name = models.CharField(max_length=20, help_text="Enter Other Name")
@@ -50,7 +55,7 @@ class Student(models.Model):
                                         on_delete=models.PROTECT)
     sponsor = models.ForeignKey(Sponsor, null=True, help_text="(IF APPLICABLE ONLY) Select or Enter the details of "
                                                               "the student's male guardian",
-                                on_delete=models.PROTECT)
+                                on_delete=models.PROTECT, blank=True)
 
     date_of_birth = models.DateField()
     GENDER_CHOICES = [
@@ -81,3 +86,18 @@ class Student(models.Model):
     def get_absolute_url(self):
         reverse('student_detail', args=[str(self.student_id)])
 
+
+class DisciplinaryIssue(models.Model):
+    date = models.DateField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    title = models.CharField(max_length=20)
+    issue = models.TextField(max_length=300)
+    outcome = models.TextField(max_length=150, blank=True, null=True)
+
+
+class HealthIssue(models.Model):
+    date = models.DateField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    title = models.CharField(max_length=20)
+    issue = models.TextField(max_length=150)
+    treatment = models.TextField(max_length=150, blank=True, null=True)

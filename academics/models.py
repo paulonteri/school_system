@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 
 from staff.models import TeachingStaff
+# from students.models import Student
 
 
 # Create your models here.
@@ -13,7 +14,8 @@ class Subject(models.Model):
 
 
 class ClassNumeral(models.Model):
-    name = models.IntegerField(primary_key=True, help_text="For Example: 1,2,3. Streams (eg; east) will be added later")
+    name = models.IntegerField(primary_key=True, help_text="For Example: 1,2,3. Streams (eg; east) will be added later",
+                               validators=[MaxValueValidator(4), MinValueValidator(1)])
 
     class Meta:
         verbose_name_plural = "Class Numerals"
@@ -30,11 +32,11 @@ class Classes(models.Model):
     assistant_class_teacher = models.ForeignKey(TeachingStaff, blank=True, null=True,
                                                 on_delete=models.PROTECT,
                                                 related_name="classes_assistantClassTeachers")
-    year_of_graduation = models.DateField(validators=[MaxValueValidator(3000), MinValueValidator(2020)])
+    year_of_graduation = models.IntegerField('Year of Graduation ', null=True, validators=[MaxValueValidator(3500), MinValueValidator(2020)])
     active = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.Class, self.Stream, self.year_of_graduation}'
+        return f'{self.Class, self.stream, self.year_of_grad}'
 
     class Meta:
         ordering = ['Class', 'stream']
