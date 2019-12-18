@@ -9,6 +9,7 @@ class Father(models.Model):
     sir_name = models.CharField(max_length=20)
     email = models.EmailField()
     phone = models.IntegerField()
+    premium = models.BooleanField(default=False, blank=True, help_text="Do not edit this")
 
     def __str__(self):
         return f'{self.sir_name} {self.first_name}'
@@ -19,6 +20,7 @@ class Mother(models.Model):
     sir_name = models.CharField(max_length=20)
     email = models.EmailField()
     phone = models.IntegerField()
+    premium = models.BooleanField(default=False, blank=True, help_text="Do not edit this")
 
     def __str__(self):
         return f'{self.sir_name} {self.first_name}'
@@ -28,6 +30,7 @@ class Sponsor(models.Model):
     first_name = models.CharField(blank=True, null=True, max_length=20, help_text="First name of sponsor if applicable")
     sir_name = models.CharField(blank=True, null=True, max_length=20, help_text="Sir name of sponsor if applicable")
     company_name = models.CharField(blank=True, null=True, max_length=20, help_text="Only if the Sponsor is a company")
+    premium = models.BooleanField(default=False, blank=True, help_text="Do not edit this")
 
     def __str__(self):
         return f'{self.company_name} {self.sir_name} {self.first_name}'
@@ -75,7 +78,6 @@ class Student(models.Model):
     emergency_contact_name = models.CharField(max_length=40)
     emergency_contact_relationship = models.CharField(null=True, max_length=10, help_text="Eg: Close Uncle")
     emergency_phone = models.IntegerField(help_text="Enter Emergency phone number")
-    premium = models.BooleanField(default=False, blank=True, help_text="Do not edit this")
 
     def __str__(self):
         return f'{self.student_id}: {self.sir_name} {self.first_name}'
@@ -94,6 +96,15 @@ class DisciplinaryIssue(models.Model):
     issue = models.TextField(max_length=300)
     outcome = models.TextField(max_length=150, blank=True, null=True)
 
+    def __str__(self):
+        return f'{self.title}: {self.student}'
+
+    class Meta:
+        ordering = ['date', 'student']
+
+    def get_absolute_url(self):
+        reverse('Discipline', args=[str(self.title)])
+
 
 class HealthIssue(models.Model):
     date = models.DateField()
@@ -101,3 +112,12 @@ class HealthIssue(models.Model):
     title = models.CharField(max_length=20)
     issue = models.TextField(max_length=150)
     treatment = models.TextField(max_length=150, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.title}: {self.student}'
+
+    class Meta:
+        ordering = ['date', 'student']
+
+    def get_absolute_url(self):
+        reverse('Health', args=[str(self.title)])

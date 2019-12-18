@@ -20,6 +20,10 @@ class FeePayable(models.Model):
     def __str__(self):
         return f'{self.class_numeral.name},{self.total_fee}'
 
+    class Meta:
+        verbose_name_plural = "Fee Payable"
+        ordering = ['class_numeral', 'total_fee']
+
 
 class FeePaymentStatus(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -28,3 +32,7 @@ class FeePaymentStatus(models.Model):
 
     def __str__(self):
         return f'{self.student.name} Balance = {self.fee_paid.total_fee - self.fee_paid} out of {self.fee_payable.total_fee}'
+
+    class Meta:
+        verbose_name_plural = "Fee Payment Status"
+        ordering = ['fee_paid', 'student']

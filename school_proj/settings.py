@@ -38,11 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'students',
+    'tution',
     'staff',
     'library',
     'academics',
     'school',
     'school_proj',
+    'payments',
+    'communication',
+    'school_calendar',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +64,7 @@ ROOT_URLCONF = 'school_proj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'school_proj/templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {

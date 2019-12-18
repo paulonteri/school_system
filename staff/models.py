@@ -53,7 +53,7 @@ class TeachingStaff(models.Model):
         reverse('student_detail', args=[str(self.student_id)])
     
     def __str__(self):
-        return f'{self.role.role}: {self.sir_name} {self.first_name}'
+        return f'{self.staff_info.role}: {self.staff_info.sir_name} {self.staff_info.first_name}'
 
     class Meta:
         verbose_name_plural = "Teaching Staff"
