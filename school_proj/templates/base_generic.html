@@ -37,7 +37,8 @@
                 <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="">Students</a></li>
                 <li><a href="">Staff</a></li>
-                <li><a href="">Library</a></li>
+                <li><a href="{% url 'library_home' %}">Library</a></li>
+                <li><a href="{% url 'book_list' %}">Book List</a></li>
                 </ul>
             {% endblock %}
 

@@ -1,0 +1,13 @@
+class SubjectTeacher(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    teacher = models.ForeignKey(TeachingStaff, on_delete=models.CASCADE)
+    actively_teaching = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['subject', 'teacher']
+
+    def __str__(self):
+        return f'{self.subject}: {self.teacher.staff_info.sir_name} {self.teacher.staff_info.first_name}'
+
+    def get_absolute_url(self):
+        reverse('Subject_Teacher', args=[str(self.id)])
