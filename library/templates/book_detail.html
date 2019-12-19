@@ -1,0 +1,32 @@
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+
+
+<div class="mt-5">
+    <h3 class="">Book Details:</h3>
+
+    <div style="width: 50rem;" class=" card mt-5 mr-3 mb-3 rounded justify-content-center shadow ">
+
+          <div class="card-header">
+              <p><span class="text-muted">Title: </span>{{ book_detail.title }}</p>
+          </div>
+
+           <ul class="list-group list-group-flush">
+               <li class="list-group-item"><span class="text-muted">ID: </span>{{ book_detail.id }}</li>
+               <li class="list-group-item"><span class="text-muted">Author: </span>{{ book_detail.display_author_fn }} {{ book_detail.display_author_ln }}</li>
+               <li class="list-group-item"><span class="text-muted">Type: </span>{{ book_detail.type }}</li>
+                <li class="list-group-item"><span class="text-muted">Subject: </span>{{ book_detail.subject }}</li>
+                <li class="list-group-item"><span class="text-muted">ISBN: </span>{{ book_detail.ISBN }}</li>
+                <li class="list-group-item"><span class="text-muted">Summary: </span>{{ book_detail.summary }}</li>
+
+           </ul>
+
+
+
+</div>
+</div>
+
+
+{% endblock %}

@@ -26,14 +26,15 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4(), help_text='Unique ID for this particular book '
-                                                                            'across whole library')
+    id = models.CharField(max_length=20, primary_key=True, default=uuid.uuid4(),
+                          help_text='Unique ID for this particular book '
+                                    'across whole library')
     title = models.CharField(max_length=200)
     # Foreign Key used because book can only have one author, but authors can have multiple books
     author = models.ManyToManyField(Author)
     # ManyToManyField used because genre can contain many books. Books can cover many genres.
-    type = models.ManyToManyField(BookType, help_text='Select a book type')
-    subject = models.ManyToManyField(Subject, help_text='Select Subject')
+    type = models.ForeignKey(BookType, on_delete=models.PROTECT, help_text='Select a book type', null=True)
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT, help_text='Select Subject', null=True)
     summary = models.TextField(max_length=1000, help_text="Enter a brief description of the Book", blank=True,
                                null=True)
     ISBN = models.CharField('ISBN', max_length=13, blank=True, null=True,
@@ -45,13 +46,13 @@ class Book(models.Model):
         # include author
 
     def get_absolute_url(self):
-        return reverse("book-detail", args=[str(self.id)])
+        return reverse("book_detail", args=[str(self.id)])
 
-    def display_subject(self):
-        """Create a string for the Genre. This is required to display genre in Admin."""
-        return ', '.join(subject.name for subject in self.subject.all()[:1])
+    def display_author_fn(self):
+        return ','.join(i.first_name for i in self.author.all()[:3])
 
-    display_subject.short_description = 'Subject'
+    def display_author_ln(self):
+        return ','.join(i.last_name for i in self.author.all()[:3])
 
 
 class BorrowBookInstance(models.Model):
