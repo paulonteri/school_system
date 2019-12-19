@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'students',
     'staff',
     'library',
@@ -46,6 +47,9 @@ INSTALLED_APPS = [
     'payments',
     'communication',
     'school_calendar',
+    'crispy_forms',
+    'bootstrapform',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

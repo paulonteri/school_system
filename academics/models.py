@@ -87,16 +87,16 @@ class SubjectTeacher(models.Model):
 
 
 class Exam(models.Model):
-    name = models.CharField(max_length=50, help_text="Example: 2019 End Term 1 Exam")
-    TERMS = [('o', 'one'), ('tw', 'two'), ('th', 'three')]
-    term = models.CharField(choices=TERMS, max_length=4)
+    name = models.CharField(max_length=50, help_text="Example: End Term ")
+    TERMS = [('Term Two', 'Term One'), ('Term Two', 'Term Two'), (' Term Three', ' Term Three')]
+    term = models.CharField(choices=TERMS, max_length=11)
     year = models.IntegerField(validators=[MaxValueValidator(3500), MinValueValidator(2020)])
     exam_start_date = models.DateField()
     subjects = models.ManyToManyField(Subject, help_text="Select Subjects")
     classes_involved = models.ManyToManyField(ClassNumeral)
 
     def __str__(self):
-        return f'{self.name}: {self.term} {self.year}'
+        return f'{self.name} ({self.term}: {self.year})'
 
     class Meta:
         ordering = ['year', 'name']

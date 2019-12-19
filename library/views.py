@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views import generic
+from django.views import generic, View
+from . filters import BookFilter
 from library.models import Book, BookType, BorrowBookInstance, Subject, Author
 
 
@@ -19,3 +20,9 @@ class BookDetailView(generic.DetailView):
     model = Book
     context_object_name = 'book_detail'
     template_name = 'book_detail.html'
+
+
+def book_search(request):
+    book_list = Book.objects.all()
+    book_filter = BookFilter(request.GET, queryset=book_list)
+    return render(request, 'book_list_search.html', {'filter': book_filter})

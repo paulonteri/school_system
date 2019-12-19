@@ -4,7 +4,6 @@
     list-style: none;
 }
 body {
-    /*background-color: rgba(235, 237, 238, 0.31);*/
     margin-top: 15px;
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
@@ -15,3 +14,4 @@ table{
     text-align: center;
 
 }
+.container-fluid {max-width: 100%; height: auto;}
