@@ -36,4 +36,55 @@ admin.site.register(DisciplinaryIssue)
 admin.site.register(HealthIssue)
 admin.site.register(Dormitories)
 
+#####################################
 
+# list view
+
+# @admin.register(BookAdmin)
+# class BookAdmin(admin.ModelAdmin):
+#     list_display = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')  # fields to be displayed
+#     fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]  # how they are displayed
+#     list_filter = ('status', 'due_back')  # filter(on the side)
+
+######################################
+
+# detail view (sectioned)
+
+# @admin.register(BookInstance)
+# class BookInstanceAdmin(admin.ModelAdmin):
+#     list_filter = ('status', 'due_back')
+#
+#     fieldsets = (
+#         (None, {
+#             'fields': ('book', 'imprint', 'id')
+#         }),
+#         ('Availability', {
+#             'fields': ('status', 'due_back')
+#         }),
+#     )
+
+#####################################
+
+# Inline editing of associated records
+
+# class BooksInstanceInline(admin.TabularInline):
+#     model = BookInstance
+#
+# @admin.register(Book)
+# class BookAdmin(admin.ModelAdmin):
+#     list_display = ('title', 'author', 'display_genre')
+#     inlines = [BooksInstanceInline]
+
+##########################################################################
+
+# Unfortunately we can't directly specify the genre field in list_display because it is a ManyToManyField (Django
+# prevents this because there would be a large database access "cost" in doing so). Instead we'll define a
+# display_genre function to get the information as a string (this is the function we've called above; we'll define it
+# below).
+
+# def display_genre(self):
+#     """Create a string for the Genre. This is required to display genre in Admin."""
+#     return ', '.join(genre.name for genre in self.genre.all()[:3])
+#
+#
+# display_genre.short_description = 'Genre'
