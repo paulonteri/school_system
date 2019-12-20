@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from academics.models import Classes
+from academics.models import Classes, Stream, ClassNumeral
 
 
 class Father(models.Model):

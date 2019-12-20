@@ -1,0 +1,64 @@
+{% extends "base_clean.html" %}
+{% load bootstrap %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <h3 class="text-center">Students</h3>
+
+<div class="row">
+    {# search div start#}
+     <div class="col-sm-2 card shadow py-3 mt-0 mb-1 ">
+            <p>Search</p>
+
+            <small>
+          <form method="get" class="text-muted">
+                {{ filter.form | bootstrap}}
+                <button type="submit" class="btn btn-secondary btn-sm btn-block active" >Search</button>
+          </form>
+            </small>
+    </div>
+    {# search div end #}
+
+
+{# table div start #}
+    <div class="col-sm-10">
+
+
+
+        <div class="table-responsive shadow-lg pt-3 px-3 pt-0 mb-4 bg-white rounded justify-content-center">
+            <table class="justify-content-center table table-sm table-bordered table-hover">
+                <caption>List of Books</caption>
+{# table head #}
+              <thead class="bg-light" >
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Class</th>
+                        </tr>
+              </thead>
+
+{# table body #}
+              <tbody>
+
+              {% for i in filter.qs %}
+              <tr>
+                      <td><a href="{{ i.get_absolute_url }}">{{ i.id }}</a></td>
+                      <td>{{ i.first_name }} {{ i.last_name }}</td>
+                      <td>{{ i.Class }} </td>
+              </tr>
+              {% endfor %}
+
+              </tbody>
+            </table>
+{# table end #}
+        </div>
+    </div>
+{# table div end #}
+
+</div>{# page row ended #}
+
+</div>{# container fluid ended #}
+
+
+{% endblock %}

@@ -36,8 +36,9 @@ from library.models import Book, BookType, BorrowBookInstance, Subject, Author
 #         fields = ['manufacturer__country']
 
 class BookFilter(django_filters.FilterSet):
+    id = django_filters.CharFilter(lookup_expr='icontains')
     title = django_filters.CharFilter(lookup_expr='icontains')
-    author = django_filters.ModelChoiceFilter(queryset=Author.objects.all())
-    type = django_filters.ModelChoiceFilter(queryset=BookType.objects.all())
-    subject = django_filters.ModelMultipleChoiceFilter(queryset=Subject.objects.all())
+#   author = django_filters.ModelChoiceFilter(queryset=Author.objects.all())
+#    type = django_filters.ModelChoiceFilter(queryset=BookType.objects.all())
+#   subject = django_filters.ModelMultipleChoiceFilter(queryset=Subject.objects.all())
 
