@@ -108,6 +108,12 @@ class Exam(models.Model):
 class ExamPerformance(models.Model):
     name = models.ForeignKey(Exam, on_delete=models.PROTECT)
     subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    # function to get:
+    # student.classes
+    # student.classes.stream
+    # student.classes.Class
+    # get a method that automatically adds the grade
+    # who recorded?
     student = models.ForeignKey('students.Student', on_delete=models.CASCADE)
     marks = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)])
 
