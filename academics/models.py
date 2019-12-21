@@ -49,7 +49,7 @@ class Stream(models.Model):
 
 
 class Classes(models.Model):
-    Class = models.ForeignKey(ClassNumeral, on_delete=models.PROTECT)
+    class_numeral = models.ForeignKey(ClassNumeral, on_delete=models.PROTECT)
     stream = models.ForeignKey(Stream, on_delete=models.PROTECT)
     class_teacher = models.ForeignKey(TeachingStaff, on_delete=models.PROTECT, related_name="classTeachers")
     assistant_class_teacher = models.ForeignKey(TeachingStaff, blank=True, null=True,
@@ -60,14 +60,72 @@ class Classes(models.Model):
     active = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.Class.name, self.stream.name, self.year_of_graduation}'
+        return f'{self.class_numeral.name, self.stream.name, self.year_of_graduation}'
 
     class Meta:
-        ordering = ['Class', 'stream']
+        ordering = ['class_numeral', 'stream']
         verbose_name_plural = "Class + Streams (Normal Classes)"
 
     def get_absolute_url(self):
         reverse('classes', args=[str(self.id)])
+
+
+class StudentClassStreamView(models.Model):
+    student_id = models.IntegerField(primary_key=True, help_text="Enter Student ID")
+    class_stream = models.ForeignKey(Classes, null=True, on_delete=models.PROTECT)
+    dormitory = models.ForeignKey('students.Dormitories', null=True, on_delete=models.PROTECT, blank=True)
+    first_name = models.CharField(max_length=20, help_text="Enter First Name")
+    sir_name = models.CharField(max_length=20, help_text="Enter Sir Name")
+    other_name = models.CharField(max_length=20, help_text="Enter Other Name")
+    father_alive = models.BooleanField(default=True, null=True,
+                                       help_text="Is the father alive?")
+    mother_alive = models.BooleanField(default=True, null=True, help_text="Is the mother alive?")
+    father_first_name = models.CharField(max_length=20, null=True, help_text="Enter the first name of the student's "
+                                                                             "male guardian")
+    father_sir_name = models.CharField(max_length=20, null=True)
+    father_email = models.EmailField(null=True)
+    father_phone = models.IntegerField(null=True)
+    father_premium = models.BooleanField(default=False, blank=True, help_text="Do not edit this")
+    mother_first_name = models.CharField(max_length=20, null=True, help_text="Enter the first name of the student's "
+                                                                             "female guardian")
+    mother_sir_name = models.CharField(max_length=20, null=True)
+    mother_email = models.EmailField(null=True)
+    mother_phone = models.IntegerField(null=True)
+    mother_premium = models.BooleanField(default=False, blank=True, help_text="Do not edit this")
+    sponsor_first_name = models.CharField(blank=True, null=True, max_length=20,
+                                          help_text="First name of sponsor if applicable")
+    sponsor_sir_name = models.CharField(blank=True, null=True, max_length=20,
+                                        help_text="Sir name of sponsor if applicable")
+    sponsor_company_name = models.CharField(blank=True, null=True, max_length=20,
+                                            help_text="Only if the Sponsor is a company")
+    sponsor_premium = models.BooleanField(default=False, blank=True, help_text="Do not edit this")
+
+    date_of_birth = models.DateField()
+    GENDER_CHOICES = [
+        ('m', 'male'),
+        ('f', 'female')]
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
+    kcpe_marks = models.IntegerField(null=True, blank=True)
+    primary_school = models.CharField(max_length=20, null=True, blank=True)
+    admission_date = models.DateField(null=True, blank=True)
+    is_enrolled = models.BooleanField(default=True, help_text="Is the student enrolled?")
+    home_county = models.CharField(max_length=20, null=True, blank=True, help_text="Enter home County")
+    home_town = models.CharField(max_length=20, null=True, blank=True, help_text="Enter home Town")
+    religion = models.CharField(max_length=10, null=True, blank=True, )
+    health = models.TextField(max_length=500, null=True, blank=True, default="Good", help_text="Enter health status ")
+    class_numeral = models.ForeignKey(ClassNumeral, on_delete=models.PROTECT)
+    stream = models.ForeignKey(Stream, on_delete=models.PROTECT)
+    class_teacher = models.ForeignKey(TeachingStaff, on_delete=models.PROTECT, related_name="classTeachersStaff")
+    assistant_class_teacher = models.ForeignKey(TeachingStaff, blank=True, null=True,
+                                                on_delete=models.PROTECT,
+                                                related_name="classes_assistantClassTeachersStaffzz")
+    year_of_graduation = models.IntegerField('Year of Graduation ', null=True,
+                                             validators=[MaxValueValidator(3500), MinValueValidator(2020)])
+    active = models.BooleanField(default=False)
+
+    class Meta:
+        managed = False
+        db_table = "student_class_stream_view"
 
 
 # join table
@@ -84,6 +142,13 @@ class SubjectTeacher(models.Model):
 
     def get_absolute_url(self):
         reverse('Subject_Teacher', args=[str(self.id)])
+
+
+from random import seed
+from random import random
+
+def return_random():
+    return random()
 
 
 class Exam(models.Model):
@@ -114,8 +179,18 @@ class ExamPerformance(models.Model):
     # student.classes.Class
     # get a method that automatically adds the grade
     # who recorded?
-    student = models.ForeignKey('students.Student', on_delete=models.CASCADE)
+    stud = models.ForeignKey('students.Student', on_delete=models.CASCADE)
     marks = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)])
+    GRADE_CHOICES = [
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
+        ('A', 'D'),
+        ('E', 'E'),
+        ('F', 'F'),
+        ('Z', 'Z'),
+    ]
+    grade = models.CharField(null=True, choices=GRADE_CHOICES, max_length=1)
 
     def __str__(self):
         return f'{self.name}: {self.name.term} {self.name.year}'

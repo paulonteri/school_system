@@ -43,9 +43,9 @@
 
               {% for i in filter.qs %}
               <tr>
-                      <td><a href="{{ i.get_absolute_url }}">{{ i.student_id }}</a></td>
-                      <td>{{ i.first_name }} {{ i.last_name }}</td>
-                      <td>{{ i.Class }} </td>
+                      <td><a href="">{{ i.name }}</a></td>
+                      <td>{{ i.grade }}</td>
+                      <td>{{ i.student }} </td>
               </tr>
               {% endfor %}
 

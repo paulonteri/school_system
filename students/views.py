@@ -15,6 +15,23 @@ def index(request):
 #     return render(request, 'student_list_search.html', {'filter': student_filter})
 
 def student_search(request):
+    students = Student.objects.all()[0]
+    # classes = students.male_guardian.objects.all()[0]
+    # # for i in students:
+    # #     return Class
+    # f_name = Student.male_guardian.first_name.objects.all()
+    # def index(request):
+    #     num_students = Student.objects.all().count()
+    #     num_staff = Staff.objects.all().count()
+    #     students = Student.objects.all()
+    #     teachers = TeachingStaff.objects.all()
+    #     # orphan_students = Student.objects.filter(father_alive != True).count()
+    #
+    #     context = {
+    #         'num_students': num_students,
+    #         'num_staff': num_staff,
+    #         'students': students,
+    #         'teachers': teachers,
     student_list = Student.objects.exclude(is_enrolled=False)
     student_filter = StudentsFilter(request.GET, queryset=student_list)
     return render(request, 'student_list_search.html', {'filter': student_filter})
