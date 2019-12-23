@@ -147,9 +147,6 @@ class SubjectTeacher(models.Model):
 from random import seed
 from random import random
 
-def return_random():
-    return random()
-
 
 class Exam(models.Model):
     name = models.CharField(max_length=50, help_text="Example: End Term ")
@@ -172,25 +169,17 @@ class Exam(models.Model):
 
 class ExamPerformance(models.Model):
     name = models.ForeignKey(Exam, on_delete=models.PROTECT)
-    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
-    # function to get:
-    # student.classes
-    # student.classes.stream
-    # student.classes.Class
-    # get a method that automatically adds the grade
-    # who recorded?
-    stud = models.ForeignKey('students.Student', on_delete=models.CASCADE)
-    marks = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)])
-    GRADE_CHOICES = [
-        ('A', 'A'),
-        ('B', 'B'),
-        ('C', 'C'),
-        ('A', 'D'),
-        ('E', 'E'),
-        ('F', 'F'),
-        ('Z', 'Z'),
-    ]
-    grade = models.CharField(null=True, choices=GRADE_CHOICES, max_length=1)
+    student = models.ForeignKey('students.Student', on_delete=models.CASCADE)
+    mathematics = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
+    english = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
+    kiswahili = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
+    chemistry = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
+    physics = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
+    biology = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
+    geography = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
+    history = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
+    business = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
+    computer = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}: {self.name.term} {self.name.year}'
