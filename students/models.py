@@ -99,4 +99,3 @@ class HealthIssue(models.Model):
     def get_absolute_url(self):
         reverse('Health', args=[str(self.title)])
 
-

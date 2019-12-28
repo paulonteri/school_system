@@ -167,27 +167,6 @@ class Exam(models.Model):
         reverse('exam_detail', args=[str(self.name)])
 
 
-class ExamPerformance(models.Model):
-    name = models.ForeignKey(Exam, on_delete=models.PROTECT)
-    student = models.ForeignKey('students.Student', on_delete=models.CASCADE)
-    mathematics = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
-    english = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
-    kiswahili = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
-    chemistry = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
-    physics = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
-    biology = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
-    geography = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
-    history = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
-    business = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
-    computer = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True, blank=True)
-
-    def __str__(self):
-        return f'{self.name}: {self.name.term} {self.name.year}'
-
-    def get_absolute_url(self):
-        reverse('exam_performance_detail', args=[str(self.name)])
-
-
 class Club(models.Model):
     name = models.CharField(max_length=20, help_text="Enter Club, Society or Organisation Name")
     purpose = models.TextField(max_length=30, blank=True, null=True)
@@ -223,3 +202,77 @@ class SubjectTeacherClass(models.Model):
 
     def __str__(self):
         return f'{self.Class}: {self.teacher} {self.teacher.subject}'
+
+
+class ExamPerformance(models.Model):
+    exam_name = models.ForeignKey(Exam, on_delete=models.PROTECT)
+    student = models.ForeignKey('students.Student', on_delete=models.CASCADE)
+    english = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                  blank=True)
+    kiswahili = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                    blank=True)
+    mathematics = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                      blank=True)
+    science = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                  blank=True)
+    social_studies = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                         blank=True)
+    religious_education = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                              blank=True)
+    total = models.IntegerField(validators=[MaxValueValidator(500), MinValueValidator(00)], null=True,
+                                blank=True)
+    # subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True)
+    # subject_marks = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+    #                                     blank=True)
+    GRADE_CHOICES = [
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
+        ('D', 'D'),
+        ('D', 'D'),
+        ('E', 'E'),
+        ('F', 'F'),
+        ('Z', 'Z'),
+        ('Y', 'Y'),
+    ]
+
+    # grade = models.CharField(choices=GRADE_CHOICES, null=True, blank=True, max_length=2)
+
+    def __str__(self):
+        return f'{self.student} ; {self.exam_name} : {self.subject}'
+
+    def get_absolute_url(self):
+        reverse('exam_performance_detail', args=[str(self.name)])
+
+
+class ExamPerformanceView(models.Model):
+    exam_name = models.ForeignKey(Exam, on_delete=models.DO_NOTHING)
+    student = models.ForeignKey('students.Student', on_delete=models.DO_NOTHING)
+    first_name = models.CharField(max_length=20, help_text="Enter First Name")
+    sir_name = models.CharField(max_length=20, help_text="Enter Sir Name")
+    # subject = models.ForeignKey(Subject, on_delete=models.DO_NOTHING, null=True)
+    # subject_marks = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+    #                                     blank=True)
+    # grade = models.CharField(null=True, blank=True, max_length=2)
+    first_name = models.CharField(max_length=20, help_text="Enter First Name")
+    sir_name = models.CharField(max_length=20, help_text="Enter Sir Name")
+    class_numeral = models.ForeignKey(ClassNumeral, on_delete=models.DO_NOTHING)
+    stream = models.ForeignKey(Stream, on_delete=models.DO_NOTHING)
+    english = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                  blank=True)
+    kiswahili = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                    blank=True)
+    mathematics = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                      blank=True)
+    science = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                  blank=True)
+    social_studies = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                         blank=True)
+    religious_education = models.IntegerField(validators=[MaxValueValidator(100), MinValueValidator(00)], null=True,
+                                              blank=True)
+    total = models.IntegerField(validators=[MaxValueValidator(500), MinValueValidator(00)], null=True,
+                                blank=True)
+
+    class Meta:
+        managed = False
+        db_table = "exam_performance_view"

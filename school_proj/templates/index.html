@@ -4,52 +4,54 @@
 {% block content %}
 
   <h1>School Home</h1>
-  <p>Welcome to School, a website developed by <em>Paul Onteri</em>!</p>
+  <p>Welcome to School, a website developed by <em>Paul Onteri!</em></p>
   <h2>Dynamic content</h2>
   <p>The school has the following record counts:</p>
   
     <ul>
         <li><strong>Total Students:</strong> {{ num_students }}</li>
         <li><strong>Total Staff:</strong> {{ num_staff }}</li>
-        <li><strong>Orphans:</strong> {{ orphan }}</li>
+        <li><strong><a href="{% url 'book_list_search' %}">Book Search</a></strong></li>
+        <li><strong><a href="{% url 'exam_performance_search' %}">Exam Performance</a></strong></li>
+        <li><strong><a href="{% url 'book_list' %}">Books</a></strong></li>
     </ul>
 
 
     {# table div start #}
-    <div class="col-sm-10">
-
-
-
-        <div class="table-responsive shadow-lg pt-3 px-3 pt-0 mb-4 bg-white rounded justify-content-center">
-            <table class="justify-content-center table table-sm table-bordered table-hover">
-                <caption>List of Students</caption>
+{#    <div class="col-sm-10">#}
+{##}
+{##}
+{##}
+{#        <div class="table-responsive shadow-lg pt-3 px-3 pt-0 mb-4 bg-white rounded justify-content-center">#}
+{#            <table class="justify-content-center table table-sm table-bordered table-hover">#}
+{#                <caption>List of Students</caption>#}
 {# table head #}
-              <thead class="bg-light" >
-                        <tr>
-                          <th scope="col">ID</th>
-                            <th scope="col">Father</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">Class</th>
-                        </tr>
-              </thead>
-
+{#              <thead class="bg-light" >#}
+{#                        <tr>#}
+{#                          <th scope="col">ID</th>#}
+{#                            <th scope="col">Father</th>#}
+{#                          <th scope="col">Name</th>#}
+{#                          <th scope="col">Class</th>#}
+{#                        </tr>#}
+{#              </thead>#}
+{##}
 {# table body #}
-              <tbody>
-
-              {% for i in students %}
-              <tr>
-                      <td><a href="{{ i.get_absolute_url }}">{{ i.student_id }}</a></td>
-                        <td>Name = {{ i.first_name }} </td>
-                      <td>Father : {{ i.male_guardian.first_name }} {{ i.last_name }}</td>
-                      <td>{{ i.Class }} </td>
-              </tr>
-              {% endfor %}
-
-              </tbody>
-            </table>
+{#              <tbody>#}
+{##}
+{#              {% for i in students %}#}
+{#              <tr>#}
+{#                      <td><a href="{{ i.get_absolute_url }}">{{ i.student_id }}</a></td>#}
+{#                        <td>Name = {{ i.first_name }} </td>#}
+{#                      <td>Father : {{ i.male_guardian.first_name }} {{ i.last_name }}</td>#}
+{#                      <td>{{ i.Class }} </td>#}
+{#              </tr>#}
+{#              {% endfor %}#}
+{##}
+{#              </tbody>#}
+{#            </table>#}
 {# table end #}
-        </div>
-    </div>
+{#        </div>#}
+{#    </div>#}
 {# table div end #}
 
 {% endblock %}

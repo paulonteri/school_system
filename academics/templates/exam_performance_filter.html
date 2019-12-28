@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="container-fluid">
-  <h3 class="text-center">Students</h3>
+  <h3 class="text-center">Exam Performance</h3>
 
 <div class="row">
     {# search div start#}
@@ -32,20 +32,32 @@
 {# table head #}
               <thead class="bg-light" >
                         <tr>
-                          <th scope="col">ID</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">Class</th>
+                          <th scope="col">Exam</th>
+                          <th scope="col">Student</th>
+                           <th scope="col">English</th>
+                             <th scope="col">Kiswahili</th>
+                             <th scope="col">Mathematics</th>
+                             <th scope="col">Science</th>
+                             <th scope="col">SST</th>
+                             <th scope="col">RE</th>
+                            <th scope="col">Total</th>
                         </tr>
               </thead>
 
 {# table body #}
               <tbody>
 
-              {% for i in filter.qs %}
+              {% for i in filter.qs  %}
               <tr>
-                      <td><a href="">{{ i.name }}</a></td>
-                      <td>{{ i.grade }}</td>
-                      <td>{{ i.student }} </td>
+                      <td><a href="">{{ i.exam_name }}</a></td>
+                      <td>{{ i.student }}</td>
+                      <td>{{ i.english }} </td>
+                    <td>{{ i.kiswahili }} </td>
+              <td>{{ i.mathematics }} </td>
+              <td>{{ i.science }} </td>
+              <td>{{ i.social_studies }} </td>
+              <td>{{ i.religious_education }} </td>
+              <td>{{ i.total }} </td>
               </tr>
               {% endfor %}
 
@@ -59,6 +71,5 @@
 </div>{# page row ended #}
 
 </div>{# container fluid ended #}
-
 
 {% endblock %}
