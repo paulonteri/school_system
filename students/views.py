@@ -3,6 +3,18 @@ from django.http import HttpResponse
 from django.views import generic, View
 from .filters import StudentsFilter
 from students.models import Student
+from .forms import StudentForm
+
+
+def add_student_view(request):
+    form = StudentForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+
+    context = {
+        'form': form
+    }
+    return render(request, "add_student.html", context)
 
 
 def index(request):
